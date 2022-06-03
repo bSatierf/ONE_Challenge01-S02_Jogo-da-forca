@@ -1,22 +1,61 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./assets/Style/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
   <title>Jogo da Forca</title>
 </head>
+
 <body>
   <header class="header">
-    <a href="https://www.alura.com.br/oracle-next-education" target="_blank" rel="noopener noreferrer"><img src="./assets/image/logo-alura.svg" alt=""></a>
+    <a href="https://www.alura.com.br/oracle-next-education" target="_blank" rel="noopener noreferrer"><img
+        src="./assets/image/logo-alura.svg" alt=""></a>
   </header>
-  <main>
-    <section class="start-screen">
-
+  <main class="container">
+    <!--Tela inicial-->
+    <section class="start-screen ">
+      <div class="start-screen-container">
+        <button class=" btn-start btn-new-game">Novo Jogo</button>
+        <button class=" btn-start btn-new-word">Adicionar Nova Palavra</button>
+      </div>
     </section>
-    <section class="add-word-screen"></section>
-    <section class="game-screen"></section>
+    <!--Tela de Adição de palavras-->
+    <section class="add-word-screen hidden">
+      <textarea name="new-word" id="new-word" cols="30" rows="10"
+        placeholder="Digite uma palavra para adicionar ao jogo."></textarea>
+      <button>Salvar e começar</button>
+      <button>Cancelar</button>
+    </section>
+    <!--Tela do jogo-->
+    <section class="game-screen hidden">
+      <div>
+        <canvas class="board"></canvas>
+      </div>
+    </section>
   </main>
-  <footer class="footer"></footer>
+
+  <!--Rodapé-->
+  <footer class="footer">
+    <div class="social-network">
+
+      <a href="https://github.com/bSatierf" target="_blank"><span class="iconify-inline"
+          data-icon="akar-icons:github-fill" data-width="48" data-height="48"></span></a>
+
+
+      <a href="https://www.linkedin.com/in/balbino-freitas-neto-1721b8235/" target="_blank"><span class="iconify-inline"
+          data-icon="akar-icons:linkedin-box-fill" data-width="48" data-height="48"></span></a>
+    </div>
+
+    <div class="copyright">
+      &copy; Oracle Next Education - Alura by bSatierf - 2022
+    </div>
+
+  </footer>
 </body>
+
 </html>

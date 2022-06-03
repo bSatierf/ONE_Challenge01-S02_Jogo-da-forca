@@ -1,0 +1,134 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.hidden {
+  display: none;
+}
+
+:root {
+  --body-bg: #e5e5e5;
+  --button-placeholder-bg: rgba(10, 56, 113, 1);
+  --output-bg: #FFFFFF;
+  --encrypt-button-font: rgba(255, 255, 255, 1);
+  --decrypt-button-bg: rgba(216, 223, 232, 1);
+  --notfound-bg: rgba(52, 58, 64, 1);
+  --message-alert: rgba(73, 80, 87, 1);
+  --light: #cccccc;
+  --dark: #151515;
+}
+
+.dark-mode:root {
+  --body-bg: #111425;
+  --button-placeholder-bg: #7956FF;
+  --output-bg: #000000;
+  --encrypt-button-font: #51CFDB;
+  --decrypt-button-bg: #51CFDB;
+  --notfound-bg: #B6B5BB;
+  --message-alert: #B6B5BB;
+}
+
+body {
+  width: 100%;
+  max-width: 100vw;
+  height: 100vh;
+  background-color: var(--body-bg);
+  overflow: hidden;
+}
+
+.header {
+  margin: 30px;
+  border: 1px solid red;
+  padding: 20px;
+}
+
+.container {
+  border: 1px solid blue;
+  width: 100%;
+  height: 65%;
+  margin: 10px;
+
+}
+
+/* Start-Screen */
+
+.start-screen {
+  margin: 0 auto;
+  border: 1px solid yellow;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.start-screen-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 30%;
+  height: 50%;
+  border: 1px solid black;
+  background-color: white;
+  border: none;
+  border-radius: 20px;
+}
+
+.btn-start {
+  margin: 10px 0 10px 0;
+  width: 60%;
+  height: 30%;
+  border-radius: 20px;
+  font-size: 1.1em;
+  color: var(--encrypt-button-font);
+  background-color: var(--button-placeholder-bg);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  
+  
+}
+
+.btn-start:active {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(.96);
+}
+
+/* End Start-Screen */
+
+
+/* Footer */
+
+.footer {
+  border: 1px solid green;
+  width: 100%;
+  height: 15%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.social-network {
+display: flex;
+justify-content: space-around;
+align-items: center;
+width: 50%;
+}
+
+.copyright {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: var(--button-placeholder-bg);
+  padding: 10px;
+}
+
+/* End Footer */
