@@ -18,7 +18,7 @@
   </header>
   <main class="container">
     <!--Tela inicial-->
-    <section class="start-screen ">
+    <section class="start-screen hidden" id="start-screen">
       <div class="start-screen-container">
         <button class=" btn-start btn-new-game">Novo Jogo</button>
         <button class=" btn-start btn-new-word">Adicionar Nova Palavra</button>
@@ -26,13 +26,18 @@
     </section>
     <!--Tela de Adição de palavras-->
     <section class="add-word-screen hidden">
-      <textarea name="new-word" id="new-word" cols="30" rows="10"
+      <div class="text-area">
+        <textarea name="new-word" id="new-word" cols="30" rows="10"
         placeholder="Digite uma palavra para adicionar ao jogo."></textarea>
-      <button>Salvar e começar</button>
-      <button>Cancelar</button>
+      </div>
+      <div class="btn-add-word">
+        <button class="btn btn-save">Salvar e começar</button>
+        <button class="btn btn-cancel">Cancelar</button>
+      </div>
+      
     </section>
     <!--Tela do jogo-->
-    <section class="game-screen hidden">
+    <section class="game-screen ">
       <div>
         <canvas class="board"></canvas>
       </div>

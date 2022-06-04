@@ -5,7 +5,7 @@
   font-family: 'Inter', sans-serif;
 }
 
-.hidden {
+.add-word-screen.hidden, .start-screen.hidden {
   display: none;
 }
 
@@ -33,7 +33,7 @@
 
 body {
   width: 100%;
-  max-width: 100vw;
+  /* max-width: 100vw; */
   height: 100vh;
   background-color: var(--body-bg);
   overflow: hidden;
@@ -41,23 +41,21 @@ body {
 
 .header {
   margin: 30px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   padding: 20px;
 }
 
 .container {
-  border: 1px solid blue;
-  width: 100%;
+  /* border: 1px solid blue; */
   height: 65%;
   margin: 10px;
-
 }
 
 /* Start-Screen */
 
 .start-screen {
   margin: 0 auto;
-  border: 1px solid yellow;
+  /* border: 1px solid yellow; */
   height: 100%;
   display: flex;
   align-items: center;
@@ -74,7 +72,7 @@ body {
   box-sizing: border-box;
   width: 30%;
   height: 50%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   background-color: white;
   border: none;
   border-radius: 20px;
@@ -102,6 +100,97 @@ body {
 
 /* End Start-Screen */
 
+/* Add Word Screen */
+
+.add-word-screen {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  /* border: 1px solid pink; */
+  margin: 0 auto;
+
+}
+
+.text-area {
+  width: 100%;
+  height: 80%;
+  
+}
+
+#new-word {
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: none;
+  outline: 0;
+  font-size: 2em;
+  color: var(--button-placeholder-bg);
+  
+}
+
+#new-word::placeholder {
+  color: var(--button-placeholder-bg);
+  
+}
+
+.btn-add-word {
+  /* border: 1px solid black; */
+  width: 100%;
+  margin: 10px;
+  display: flex;
+  gap: 15px;
+  
+  
+}
+
+.btn {
+  margin: 10px;
+  width: 45%;
+  padding: 1.2em;
+  border: none;
+  border-radius: 15px;
+  font-size: 1em;
+}
+
+.btn-save {
+  background-color: var(--button-placeholder-bg);
+  color: var(--encrypt-button-font);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background-color: var(--decrypt-button-bg);
+  color: var(--button-placeholder-bg);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(.95);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* End Add Word Screen */
+
+/* Game Screen */
+
+.game-screen {
+  width: 100%;
+  height: 100%;
+  border: 1px solid orange;
+}
+.board {
+  width: 100%;
+  height: 40%;
+  max-width: 1200px;
+  max-height: 800px;
+  border: 1px solid black;
+}
 
 /* Footer */
 
