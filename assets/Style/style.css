@@ -40,14 +40,14 @@ body {
 }
 
 .header {
-  margin: 30px;
-  /* border: 1px solid red; */
-  padding: 20px;
+  margin: 10px;
+  border: 1px solid red;
+  padding: 20px 0 0 50px;
 }
 
 .container {
   /* border: 1px solid blue; */
-  height: 65%;
+  height: 75%;
   margin: 10px;
 }
 
@@ -184,9 +184,17 @@ body {
   height: 100%;
   border: 1px solid orange;
 }
+
+.game-board {
+  height: 100%;
+  border: 1px solid yellow;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .board {
   width: 100%;
-  height: 40%;
+  height: 100%;
   max-width: 1200px;
   max-height: 800px;
   border: 1px solid black;
@@ -197,12 +205,10 @@ body {
 .footer {
   border: 1px solid green;
   width: 100%;
-  height: 15%;
-  padding: 15px;
+  padding: 10px 0 0 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  align-items: center; 
 }
 
 .social-network {
@@ -217,7 +223,7 @@ width: 50%;
   align-items: flex-end;
   justify-content: center;
   color: var(--button-placeholder-bg);
-  padding: 10px;
+  padding: 10px 0 0 0;
 }
 
 /* End Footer */
