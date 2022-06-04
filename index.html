@@ -18,14 +18,14 @@
   </header>
   <main class="container">
     <!--Tela inicial-->
-    <section class="start-screen hidden" id="start-screen">
+    <section class="start-screen" id="start-screen">
       <div class="start-screen-container">
-        <button class=" btn-start btn-new-game">Novo Jogo</button>
-        <button class=" btn-start btn-new-word">Adicionar Nova Palavra</button>
+        <button class="btn-start btn-new-game" id="btn-new-game">Novo Jogo</button>
+        <button class="btn-start btn-new-word" onclick="newWordScreen()">Adicionar Nova Palavra</button>
       </div>
     </section>
     <!--Tela de Adição de palavras-->
-    <section class="add-word-screen hidden">
+    <section class="screen-add-words hidden">
       <div class="text-area">
         <textarea name="new-word" id="new-word" cols="30" rows="10"
         placeholder="Digite uma palavra para adicionar ao jogo."></textarea>
@@ -37,7 +37,7 @@
       
     </section>
     <!--Tela do jogo-->
-    <section class="game-screen ">
+    <section class="game-screen hidden">
       <div class="game-board">
         <canvas class="board"></canvas>
       </div>
@@ -61,6 +61,8 @@
     </div>
 
   </footer>
+
+  <script src="./assets/JS/scripts.js"></script>
 </body>
 
 </html>

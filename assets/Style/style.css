@@ -5,7 +5,7 @@
   font-family: 'Inter', sans-serif;
 }
 
-.add-word-screen.hidden, .start-screen.hidden {
+.screen-add-words.hidden, .start-screen.hidden, .game-screen.hidden {
   display: none;
 }
 
@@ -102,7 +102,7 @@ body {
 
 /* Add Word Screen */
 
-.add-word-screen {
+.screen-add-words {
   height: 100%;
   width: 50%;
   display: flex;
