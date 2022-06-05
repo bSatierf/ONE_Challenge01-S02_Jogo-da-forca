@@ -21,18 +21,18 @@
     <section class="start-screen" id="start-screen">
       <div class="start-screen-container">
         <button class="btn-start btn-new-game" id="btn-new-game">Novo Jogo</button>
-        <button class="btn-start btn-new-word" onclick="newWordScreen()">Adicionar Nova Palavra</button>
+        <button class="btn-start btn-new-word" id="btn-new-word">Adicionar Nova Palavra</button>
       </div>
     </section>
     <!--Tela de Adição de palavras-->
-    <section class="screen-add-words hidden">
+    <section class="screen-add-words hidden" id="screen-add-words">
       <div class="text-area">
         <textarea name="new-word" id="new-word" cols="30" rows="10"
         placeholder="Digite uma palavra para adicionar ao jogo."></textarea>
       </div>
       <div class="btn-add-word">
-        <button class="btn btn-save">Salvar e começar</button>
-        <button class="btn btn-cancel">Cancelar</button>
+        <button class="btn btn-save" id="btn-save-word">Salvar e começar</button>
+        <button class="btn btn-cancel" id="btn-cancel">Cancelar</button>
       </div>
       
     </section>
