@@ -1,5 +1,5 @@
 const palavras = ['TOMATE', 'LARANJA', 'CARRO', 'BARCO', 'INTERNET'];
-
+const letters = [];
 // let novasPalavras = [];
 
 const newGameBtn = document.querySelector('#btn-new-game');
@@ -10,6 +10,8 @@ const cancelBtn = document.querySelector('#btn-cancel');
 const saveWord = document.querySelector('#btn-save-word');
 const gameScreen = document.querySelector('#game-screen');
 let secretWord = '';
+let correctWord = '';
+let errors = 9;
 
 const board = document.getElementById('board').getContext('2d');
 
@@ -88,7 +90,7 @@ function drawLine() {
   board.lineWidth = 6;
   board.lineCap = 'round';
   board.lineJoin = 'round';
-  board.strokeStyle = '#FFFF';
+  board.strokeStyle = '#0A3871';
   board.beginPath();
 
   const axis = 600 / secretWord.length;
@@ -101,3 +103,65 @@ function drawLine() {
   board.closePath();
   console.log(secretWord);
 }
+
+function writeCorrectLetter(index) {
+  board.font = 'bold 52px Inter';
+  board.lineWidth = 6;
+  board.lineCap = 'round';
+  board.lineJoin = 'round';
+  board.strokeStyle = '#0A3871';
+  const axis = 600 / secretWord.length;
+  board.fillText(secretWord[index], 305 + (axis * index), 620);
+  board.stroke();
+}
+
+function writeWrongLetter(wrongLetter, errorsLeft) {
+  board.font = 'bold 40px Inter';
+  board.lineWidth = 6;
+  board.lineCap = 'round';
+  board.lineJoin = 'round';
+  board.strokeStyle = '#0A3871';
+  board.fillText(wrongLetter, 335 + (40 * (10 - errorsLeft)), 650, 40);
+  board.stroke();
+}
+
+function checkCorrectLetter(key) {
+  if (letters.length < 1 || letters.indexOf(key) < 0) {
+    console.log(key);
+    letters.push(key);
+    return false;
+  }
+  letters.push(key.toUpperCase());
+  return true;
+}
+
+function addCorrectLetter(i) {
+  correctWord += secretWord[i].toUpperCase();
+}
+
+function addWrongLetter(letter) {
+  if (secretWord.indexOf(letter) <= 0) {
+    errors -= 1;
+  }
+}
+
+document.onkeydown = (event) => {
+  const letra = event.key.toUpperCase();
+  if (!checkCorrectLetter(event.key)) {
+    if (secretWord.includes(letra)) {
+      addCorrectLetter(secretWord.indexOf(letra));
+      for (let i = 0; i < secretWord.length; i += 1) {
+        if (secretWord[i] === letra) {
+          writeCorrectLetter(i);
+        }
+      }
+    }
+  } else {
+    if (!checkCorrectLetter(event.key)) {
+      return;
+    }
+
+    addWrongLetter(letra);
+    writeWrongLetter(letra, errors);
+  }
+};
