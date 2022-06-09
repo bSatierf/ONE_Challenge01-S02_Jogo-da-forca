@@ -20,7 +20,7 @@
     <!--Tela inicial-->
     <section class="start-screen" id="start-screen">
       <div class="start-screen-container">
-        <button class="btn-start btn-new-game" id="btn-new-game">Novo Jogo</button>
+        <button class="btn-start btn-start-game" id="btn-new-game">Novo Jogo</button>
         <button class="btn-start btn-new-word" id="btn-new-word">Adicionar Nova Palavra</button>
       </div>
     </section>
@@ -40,6 +40,10 @@
     <section class="game-screen hidden" id="game-screen">
       <div class="game-board">
         <canvas class="board" id="board" height="800px" width="1200"></canvas>
+        <div class="btn-in-game">
+          <button class="btn btn-new-game">Novo Jogo</button>
+          <button class="btn btn-quit">Desistir</button>
+        </div>
       </div>
     </section>
   </main>

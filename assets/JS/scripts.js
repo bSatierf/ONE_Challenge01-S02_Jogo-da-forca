@@ -1,5 +1,5 @@
 const palavras = ['TOMATE', 'LARANJA', 'CARRO', 'BARCO', 'INTERNET'];
-const letters = [];
+const letras = [];
 // let novasPalavras = [];
 
 const newGameBtn = document.querySelector('#btn-new-game');
@@ -9,6 +9,7 @@ const screenAddWords = document.querySelector('#screen-add-words');
 const cancelBtn = document.querySelector('#btn-cancel');
 const saveWord = document.querySelector('#btn-save-word');
 const gameScreen = document.querySelector('#game-screen');
+
 let secretWord = '';
 let correctWord = '';
 let errors = 9;
@@ -121,18 +122,18 @@ function writeWrongLetter(wrongLetter, errorsLeft) {
   board.lineCap = 'round';
   board.lineJoin = 'round';
   board.strokeStyle = '#0A3871';
-  board.fillText(wrongLetter, 335 + (40 * (10 - errorsLeft)), 650, 40);
-  board.stroke();
+  board.fillText(wrongLetter, 335 + (40 * (10 - errorsLeft)), 710, 40);
 }
 
 function checkCorrectLetter(key) {
-  if (letters.length < 1 || letters.indexOf(key) < 0) {
+  if (letras.length < 1 || letras.indexOf(key) < 0) {
     console.log(key);
-    letters.push(key);
+    letras.push(key);
     return false;
+  } else {
+    letras.push(key.toUpperCase());
+    return true;
   }
-  letters.push(key.toUpperCase());
-  return true;
 }
 
 function addCorrectLetter(i) {
@@ -145,9 +146,9 @@ function addWrongLetter(letter) {
   }
 }
 
-document.onkeydown = (event) => {
-  const letra = event.key.toUpperCase();
-  if (!checkCorrectLetter(event.key)) {
+document.onkeydown = (e) => {
+  const letra = e.key.toUpperCase();
+  if (!checkCorrectLetter(e.key)) {
     if (secretWord.includes(letra)) {
       addCorrectLetter(secretWord.indexOf(letra));
       for (let i = 0; i < secretWord.length; i += 1) {
@@ -155,13 +156,10 @@ document.onkeydown = (event) => {
           writeCorrectLetter(i);
         }
       }
+    } else {
+      if (!checkCorrectLetter(e.key)) return;
+      addWrongLetter(letra);
+      writeWrongLetter(letra, errors);
     }
-  } else {
-    if (!checkCorrectLetter(event.key)) {
-      return;
-    }
-
-    addWrongLetter(letra);
-    writeWrongLetter(letra, errors);
   }
 };
