@@ -1,18 +1,24 @@
 const palavras = ['TOMATE', 'LARANJA', 'CARRO', 'BARCO', 'INTERNET'];
-const letras = [];
+let letras = [];
+let correctWordArr = [];
+let secretLetterArr = [];
 // let novasPalavras = [];
 
-const newGameBtn = document.querySelector('#btn-new-game');
+const startGameBtn = document.querySelector('#btn-start-game');
 const startScreen = document.querySelector('#start-screen');
 const newWordBtn = document.querySelector('#btn-new-word');
 const screenAddWords = document.querySelector('#screen-add-words');
 const cancelBtn = document.querySelector('#btn-cancel');
 const saveWord = document.querySelector('#btn-save-word');
 const gameScreen = document.querySelector('#game-screen');
+const newGameBtn = document.querySelector('#btn-new-game');
+const quitBtn = document.querySelector('#btn-quit');
 
 let secretWord = '';
 let correctWord = '';
 let errors = 9;
+let vitoria = false;
+let vitoriaArrOk = false;
 
 const board = document.getElementById('board').getContext('2d');
 
@@ -22,10 +28,12 @@ const startScreenClass = startScreen.className;
 const wordScreenClass = screenAddWords.className;
 // const gameScreenClass = gameScreen.className;
 
-newGameBtn.addEventListener('click', () => {
+startGameBtn.addEventListener('click', () => {
   if (startScreenClass.indexOf('hidden') === -1) {
     startScreen.classList.add('hidden');
     gameScreen.classList.remove('hidden');
+    letras = [];
+    errors = 9;
     drawLine(randomWord());
   }
 });
@@ -67,6 +75,11 @@ saveWord.addEventListener('click', () => {
     if (startGame === true) {
       screenAddWords.classList.add('hidden');
       gameScreen.classList.remove('hidden');
+      console.log(letras);
+      newWordInput.value = '';
+      letras = [];
+      errors = 9;
+      board.clearRect(0, 0, 1200, 860);
       drawLine(randomWord());
     }
     console.log(palavras);
@@ -79,9 +92,13 @@ saveWord.addEventListener('click', () => {
 /* função desenhar jogo */
 
 function randomWord() {
+  correctWordArr = [];
+  secretLetterArr = [];
   const chosenWord = palavras[Math.floor(Math.random() * palavras.length)];
   // console.log(chosenWord);
   secretWord = chosenWord;
+  splitSecretWord();
+  console.log(splitSecretWord());
   return chosenWord;
 }
 
@@ -154,12 +171,66 @@ document.onkeydown = (e) => {
       for (let i = 0; i < secretWord.length; i += 1) {
         if (secretWord[i] === letra) {
           writeCorrectLetter(i);
+          correctWordArr.push(letra);
+          console.log(correctWordArr);
         }
-      }
+      } validaVitoria(); validaArr(); winGame();
     } else {
       if (!checkCorrectLetter(e.key)) return;
       addWrongLetter(letra);
       writeWrongLetter(letra, errors);
+      console.log('erros' + errors);
     }
   }
 };
+
+newGameBtn.addEventListener('click', () => {
+  screenAddWords.classList.add('hidden');
+  gameScreen.classList.remove('hidden');
+  board.clearRect(0, 0, 1200, 860);
+  letras = [];
+  errors = 9;
+  drawLine(randomWord());
+});
+
+quitBtn.addEventListener('click', () => {
+  gameScreen.classList.add('hidden');
+  startScreen.classList.remove('hidden');
+  board.clearRect(0, 0, 1200, 860);
+});
+
+function splitSecretWord() {
+  secretLetterArr = secretWord.split('');
+  for (let i = 0; i < letras.length; i += 1) {
+    secretLetterArr.push([i]);
+  }
+  return secretLetterArr;
+}
+
+
+
+function validaVitoria() {
+  for (let i = 0; i < correctWordArr.length; i += 1) {
+    if (secretLetterArr.includes(correctWordArr[i])) {
+      vitoria = true;
+      console.log();
+    }
+  }
+}
+
+function validaArr() {
+  if (correctWordArr.length === secretLetterArr.length) {
+    vitoriaArrOk = true;
+    console.log('você gahou');
+    console.log(correctWordArr.length);
+    console.log(secretLetterArr.length);
+  } else {
+    console.log('você perdeu!');
+  }
+}
+
+function winGame() {
+  if (vitoria === true && vitoriaArrOk === true) {
+    console.log('Parabéns, você ganhou!');
+  }
+}
