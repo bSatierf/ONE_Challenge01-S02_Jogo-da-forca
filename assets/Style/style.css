@@ -154,6 +154,7 @@ body {
   border: none;
   border-radius: 15px;
   font-size: 1em;
+  cursor: pointer;
 }
 
 .btn-save {
@@ -246,3 +247,37 @@ width: 50%;
 }
 
 /* End Footer */
+
+/* Modal */
+
+.modal-container {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2500;
+}
+
+.modal-container.show {
+  display: flex;
+}
+
+.modal {
+  width: 60%;
+  min-width: 300px;
+  height: 60%;
+  padding: 40px;
+  background: var(--body-bg);
+  border: 10px solid var(--button-placeholder-bg);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 0 0 10px var(--body-bg);
+}
