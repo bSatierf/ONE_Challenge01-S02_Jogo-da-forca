@@ -13,16 +13,18 @@ const saveWord = document.querySelector('#btn-save-word');
 const gameScreen = document.querySelector('#game-screen');
 const newGameBtn = document.querySelector('#btn-new-game');
 const quitBtn = document.querySelector('#btn-quit');
-const modalWin = document.querySelector('#modal-win');
+const modalWin = document.querySelector('#modal-win-lose');
 const newGameModalBtn = document.getElementById('new-game-modal');
 const exitModal = document.getElementById('exit-modal');
 const titleModal = document.getElementById('title-modal');
+const modal = document.getElementById('modal');
 
 let secretWord = '';
 let correctWord = '';
 let errors = 6;
 let vitoria = false;
 let vitoriaArrOk = false;
+let startGame = false;
 
 const board = document.getElementById('board').getContext('2d');
 
@@ -45,6 +47,7 @@ function newGame() {
     drawLine(randomWord());
     vitoria = false;
     vitoriaArrOk = false;
+    startGame = true;
     console.log('teste');
   }
 }
@@ -56,6 +59,7 @@ function newWordScreen() {
   if (wordScreenClass.indexOf('hidden') !== -1) {
     startScreen.classList.add('hidden');
     screenAddWords.classList.remove('hidden');
+    startGame = false;
   }
 }
 
@@ -78,11 +82,14 @@ saveWord.addEventListener('click', () => {
       novasPalavras[i] = novasPalavras[i].normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     } /* adicionar popup sobre as letras maiusculas e não usar caracteres com acento e ç */
 
-    let startGame = false;
-
     for (let index = 0; index < novasPalavras.length; index += 1) {
       if (palavras.includes(novasPalavras[index])) {
-        alert(`A palavra ${novasPalavras[index]} já está incluída no jogo`);
+        modalWin.classList.add('show');
+        modal.classList.add('alert');
+        newGameModalBtn.innerText = 'Alterar palavra';
+        const repeatedWord = `A palavra "${novasPalavras[index]}" já está incluída no jogo`;
+        titleModal.innerText = repeatedWord;
+        startGame = false;
       } else {
         palavras.push(novasPalavras[index]);
         startGame = true;
@@ -101,7 +108,12 @@ saveWord.addEventListener('click', () => {
     console.log(palavras);
   } else {
     /* criar popup informando que o campo não pode estar em branco */
-    alert('Favor inserir uma palavra, ou pressione cancelar, para retornar para tela principal');
+    modalWin.classList.add('show');
+    modal.classList.add('alert');
+    newGameModalBtn.innerText = 'Adicionar palavra';
+    const validWord = 'Por favor, insira uma palavra valida, ou pressione "Tela inicial" para retornar para tela principal.';
+    titleModal.innerText = validWord; /* + String.fromCodePoint(0X1F3C6); */
+    // alert('Favor inserir uma palavra, ou pressione cancelar, para retornar para tela principal');
   }
 });
 
@@ -213,6 +225,7 @@ document.onkeydown = (e) => {
 function quitGame() {
   gameScreen.classList.add('hidden');
   startScreen.classList.remove('hidden');
+  screenAddWords.classList.add('hidden');
   modalWin.classList.remove('show');
   board.clearRect(0, 0, 1200, 860);
 }
@@ -246,8 +259,9 @@ function validaArr() {
 }
 
 function winGame() {
-  if (vitoria === true && vitoriaArrOk === true) {
+  if (vitoria === true && vitoriaArrOk === true && startGame === true) {
     modalWin.classList.add('show');
+    newGameModalBtn.innerText = 'Novo Jogo';
     const win = 'Parabéns, você venceu! ';
     titleModal.innerText = win + String.fromCodePoint(0X1F3C6);
   }

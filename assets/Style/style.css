@@ -281,3 +281,7 @@ width: 50%;
   align-items: center;
   box-shadow: 0 0 0 10px var(--body-bg);
 }
+
+.modal.alert {
+  text-align: center;
+}
