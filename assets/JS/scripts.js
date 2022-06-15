@@ -216,7 +216,7 @@ function writeWrongLetter(wrongLetter, errorsLeft) {
   board.lineCap = 'round';
   board.lineJoin = 'round';
   board.strokeStyle = '#0A3871';
-  board.fillText(wrongLetter, 335 + (40 * (10 - errorsLeft)), 710, 40);
+  board.fillText(wrongLetter, 300 + (40 * (10 - errorsLeft)), 710, 40);
   board.stroke();
 }
 
