@@ -285,3 +285,18 @@ width: 50%;
 .modal.alert {
   text-align: center;
 }
+
+@keyframes modal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -60px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.show .modal {
+  animation: modal .3s;
+}

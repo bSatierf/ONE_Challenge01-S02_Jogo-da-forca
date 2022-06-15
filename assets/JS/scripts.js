@@ -1,8 +1,7 @@
-const palavras = ['TOMATE', 'LARANJA', 'CARRO', 'BARCO', 'INTERNET'];
+const palavras = ['ABACAXI', 'LARANJA', 'CAQUI', 'BARCO', 'INTERNET'];
 let letras = [];
 let correctWordArr = [];
 let secretLetterArr = [];
-// let novasPalavras = [];
 
 const startGameBtn = document.getElementById('btn-start-game');
 const startScreen = document.querySelector('#start-screen');
@@ -19,6 +18,11 @@ const exitModal = document.getElementById('exit-modal');
 const titleModal = document.getElementById('title-modal');
 const modal = document.getElementById('modal');
 
+const board = document.getElementById('board').getContext('2d');
+const newWordInput = document.querySelector('#new-word');
+const startScreenClass = startScreen.className;
+const wordScreenClass = screenAddWords.className;
+
 let secretWord = '';
 let correctWord = '';
 let errors = 6;
@@ -26,15 +30,38 @@ let vitoria = false;
 let vitoriaArrOk = false;
 let startGame = false;
 
-const board = document.getElementById('board').getContext('2d');
+function splitSecretWord() {
+  secretLetterArr = secretWord.split('');
+  for (let i = 0; i < letras.length; i += 1) {
+    secretLetterArr.push([i]);
+  }
+  return secretLetterArr;
+}
 
-const newWordInput = document.querySelector('#new-word');
+function randomWord() {
+  correctWordArr = [];
+  secretLetterArr = [];
+  const chosenWord = palavras[Math.floor(Math.random() * palavras.length)];
+  secretWord = chosenWord;
+  splitSecretWord();
+  return chosenWord;
+}
 
-const startScreenClass = startScreen.className;
-const wordScreenClass = screenAddWords.className;
-// const gameScreenClass = gameScreen.className;
+function drawLine() {
+  board.lineWidth = 6;
+  board.lineCap = 'round';
+  board.lineJoin = 'round';
+  board.strokeStyle = '#0A3871';
+  board.beginPath();
 
-// startGameBtn.addEventListener('click', () => {});
+  const axis = 600 / secretWord.length;
+  for (let i = 0; i < secretWord.length; i += 1) {
+    board.moveTo(300 + (axis * i), 640);
+    board.lineTo(350 + (axis * i), 640);
+  }
+  board.stroke();
+  board.closePath();
+}
 
 function newGame() {
   if (startScreenClass.indexOf('hidden') === -1) {
@@ -44,15 +71,21 @@ function newGame() {
     errors = 6;
     modalWin.classList.remove('show');
     board.clearRect(0, 0, 1200, 860);
+    forca('#000');
     drawLine(randomWord());
     vitoria = false;
     vitoriaArrOk = false;
     startGame = true;
-    console.log('teste');
   }
 }
 
-startGameBtn.onclick = newGame;
+function gameOver(error) {
+  if (error === 0 && startGame === true) {
+    const lose = 'Você perdeu! ';
+    titleModal.textContent = lose + String.fromCodePoint(0X1F494);
+    modalWin.classList.add('show');
+  }
+}
 
 function newWordScreen() {
 // newWordBtn.addEventListener('click', () => {
@@ -63,7 +96,63 @@ function newWordScreen() {
   }
 }
 
-newWordBtn.onclick = newWordScreen;
+function drawHead(x, y, radius, color) {
+  board.lineWidth = 6;
+  board.lineCap = 'round';
+  board.lineJoin = 'round';
+  board.strokeStyle = color;
+  board.beginPath();
+  board.arc(x, y, radius, 0, 2 * Math.PI);
+  board.stroke();
+}
+
+function drawBody(x, y, x1, y1, color) {
+  board.lineWidth = 6;
+  board.lineCap = 'round';
+  board.lineJoin = 'round';
+  board.strokeStyle = color;
+  board.beginPath();
+  board.moveTo(x, y);
+  board.lineTo(x1, y1);
+  board.stroke();
+}
+
+function drawFullBody(error) {
+  if (error === 5) {
+    // desenha cabeça
+    drawHead(600, 200, 40, '#0A3871');
+  } if (error === 4) {
+    drawBody(600, 240, 600, 390, '#0A3871');
+  } if (error === 3) {
+    drawBody(600, 390, 570, 470, '#0A3871');
+  } if (error === 2) {
+    drawBody(600, 390, 630, 470, '#0A3871');
+  } if (error === 1) {
+    drawBody(600, 300, 570, 360, '#0A3871');
+  } if (error === 0) {
+    drawBody(600, 300, 630, 360, '#0A3871');
+    gameOver(error);
+  }
+}
+
+function hangingStructureDrawing(x, y, x1, y1, line, color) {
+  board.strokeStyle = color;
+  board.lineWidth = line;
+  board.lineCap = 'round';
+  board.lineJoin = 'round';
+  board.beginPath();
+  board.moveTo(x, y);
+  board.lineTo(x1, y1);
+  board.stroke();
+}
+
+function forca(color) {
+  hangingStructureDrawing(300, 550, 750, 550, 10, color);
+  hangingStructureDrawing(400, 110, 470, 25, 10, color);
+  hangingStructureDrawing(400, 550, 400, 25, 10, color);
+  hangingStructureDrawing(400, 25, 600, 25, 10, color);
+  hangingStructureDrawing(601, 25, 602, 155, 8, color);
+}
 
 cancelBtn.addEventListener('click', () => {
   startScreen.classList.remove('hidden');
@@ -76,7 +165,6 @@ saveWord.addEventListener('click', () => {
   const newWordValue = newWordInput.value;
   if (newWordValue !== '') {
     const novasPalavras = newWordValue.split(', ');
-    console.log(novasPalavras);
     for (let i = 0; i < novasPalavras.length; i += 1) {
       novasPalavras[i] = novasPalavras[i].toUpperCase();
       novasPalavras[i] = novasPalavras[i].normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -98,57 +186,18 @@ saveWord.addEventListener('click', () => {
     if (startGame === true) {
       screenAddWords.classList.add('hidden');
       gameScreen.classList.remove('hidden');
-      console.log(letras);
-      newWordInput.value = '';
-      letras = [];
-      errors = 6;
-      board.clearRect(0, 0, 1200, 860);
-      drawLine(randomWord());
+      newGame();
     }
-    console.log(palavras);
   } else {
     /* criar popup informando que o campo não pode estar em branco */
     modalWin.classList.add('show');
     modal.classList.add('alert');
     newGameModalBtn.innerText = 'Adicionar palavra';
-    const validWord = 'Por favor, insira uma palavra valida, ou pressione "Tela inicial" para retornar para tela principal.';
-    titleModal.innerText = validWord; /* + String.fromCodePoint(0X1F3C6); */
+    const validWord = 'Por favor, insira uma palavra válida, ou pressione "Tela inicial" para retornar para tela principal.';
+    titleModal.innerText = validWord;
     // alert('Favor inserir uma palavra, ou pressione cancelar, para retornar para tela principal');
   }
 });
-
-/* função desenhar jogo */
-
-function randomWord() {
-  correctWordArr = [];
-  secretLetterArr = [];
-  const chosenWord = palavras[Math.floor(Math.random() * palavras.length)];
-  // console.log(chosenWord);
-  secretWord = chosenWord;
-  splitSecretWord();
-  console.log(splitSecretWord());
-  return chosenWord;
-}
-
-// console.log(secretWord);
-
-function drawLine() {
-  board.lineWidth = 6;
-  board.lineCap = 'round';
-  board.lineJoin = 'round';
-  board.strokeStyle = '#0A3871';
-  board.beginPath();
-
-  const axis = 600 / secretWord.length;
-  console.log(secretWord.length);
-  for (let i = 0; i < secretWord.length; i += 1) {
-    board.moveTo(300 + (axis * i), 640);
-    board.lineTo(350 + (axis * i), 640);
-  }
-  board.stroke();
-  board.closePath();
-  console.log(secretWord);
-}
 
 function writeCorrectLetter(index) {
   board.font = 'bold 52px Inter';
@@ -168,11 +217,11 @@ function writeWrongLetter(wrongLetter, errorsLeft) {
   board.lineJoin = 'round';
   board.strokeStyle = '#0A3871';
   board.fillText(wrongLetter, 335 + (40 * (10 - errorsLeft)), 710, 40);
+  board.stroke();
 }
 
 function checkCorrectLetter(key) {
   if (letras.length < 1 || letras.indexOf(key) < 0) {
-    console.log(key);
     letras.push(key);
     return false;
   } else {
@@ -192,57 +241,10 @@ function addWrongLetter(letter) {
   }
 }
 
-document.onkeydown = (e) => {
-  const letra = e.key.toUpperCase();
-  if (!checkCorrectLetter(e.key)) {
-    if (secretWord.includes(letra)) {
-      addCorrectLetter(secretWord.indexOf(letra));
-      for (let i = 0; i < secretWord.length; i += 1) {
-        if (secretWord[i] === letra) {
-          writeCorrectLetter(i);
-          correctWordArr.push(letra);
-          console.log(correctWordArr);
-        }
-      } validaVitoria(); validaArr(); winGame();
-    } else {
-      if (!checkCorrectLetter(e.key)) return;
-      addWrongLetter(letra);
-      writeWrongLetter(letra, errors);
-      console.log('erros' + errors);
-    }
-  }
-};
-
-// newGameBtn.addEventListener('click', () => {
-//   screenAddWords.classList.add('hidden');
-//   gameScreen.classList.remove('hidden');
-//   board.clearRect(0, 0, 1200, 860);
-//   letras = [];
-//   errors = 9;
-//   drawLine(randomWord());
-// });
-
-function quitGame() {
-  gameScreen.classList.add('hidden');
-  startScreen.classList.remove('hidden');
-  screenAddWords.classList.add('hidden');
-  modalWin.classList.remove('show');
-  board.clearRect(0, 0, 1200, 860);
-}
-
-function splitSecretWord() {
-  secretLetterArr = secretWord.split('');
-  for (let i = 0; i < letras.length; i += 1) {
-    secretLetterArr.push([i]);
-  }
-  return secretLetterArr;
-}
-
 function validaVitoria() {
   for (let i = 0; i < correctWordArr.length; i += 1) {
     if (secretLetterArr.includes(correctWordArr[i])) {
       vitoria = true;
-      // console.log();
     }
   }
 }
@@ -250,11 +252,6 @@ function validaVitoria() {
 function validaArr() {
   if (correctWordArr.length === secretLetterArr.length) {
     vitoriaArrOk = true;
-    // console.log('você gahou');
-    // console.log(correctWordArr.length);
-    // console.log(secretLetterArr.length);
-  } else {
-    // console.log('você perdeu!');
   }
 }
 
@@ -267,56 +264,45 @@ function winGame() {
   }
 }
 
-function gameOver(error) {
-  if (error === 0) {
-    const lose = 'Você perdeu! ';
-    titleModal.textContent = lose + String.fromCodePoint(0X1F494);
-    modalWin.classList.add('show');
+function isLetter(codigo) {
+  return codigo >= 65 && codigo <= 90;
+}
+
+document.onkeydown = (e) => {
+  const codigo = e.keyCode;
+  if (isLetter(codigo)) {
+    const letra = e.key.toUpperCase();
+    if (!checkCorrectLetter(e.key)) {
+      if (secretWord.includes(letra)) {
+        addCorrectLetter(secretWord.indexOf(letra));
+        for (let i = 0; i < secretWord.length; i += 1) {
+          if (secretWord[i] === letra) {
+            writeCorrectLetter(i);
+            correctWordArr.push(letra);
+          }
+        } validaVitoria(); validaArr(); winGame();
+      } else {
+        if (!checkCorrectLetter(e.key)) return;
+        addWrongLetter(letra);
+        writeWrongLetter(letra, errors);
+      }
+    }
   }
-}
+};
 
-function drawHead(x, y, radius, color) {
-  board.lineWidth = 6;
-  board.lineCap = 'round';
-  board.lineJoin = 'round';
-  board.fillStyle = color;
-  board.beginPath();
-  board.arc(x, y, radius, 0, 2 * Math.PI);
-  board.stroke();
-}
-
-function drawBody(x, y, x1, y1, color) {
-  board.lineWidth = 6;
-  board.lineCap = 'round';
-  board.lineJoin = 'round';
-  board.beginPath();
-  board.moveTo(x, y);
-  board.lineTo(x1, y1);
-  board.stroke();
-}
-
-function drawFullBody(error) {
-  if (error === 5) {
-    // desenha cabeça
-    drawHead(600, 200, 40, '#0A3871');
-  } if (error === 4) {
-    drawBody(600, 240, 600, 390);
-  } if (error === 3) {
-    drawBody(600, 390, 570, 470);
-  } if (error === 2) {
-    drawBody(600, 390, 630, 470);
-  } if (error === 1) {
-    drawBody(600, 300, 570, 360);
-  } if (error === 0) {
-    drawBody(600, 300, 630, 360);
-    gameOver(error);
-  }
+function quitGame() {
+  gameScreen.classList.add('hidden');
+  startScreen.classList.remove('hidden');
+  screenAddWords.classList.add('hidden');
+  modalWin.classList.remove('show');
+  board.clearRect(0, 0, 1200, 860);
 }
 
 /*  */
-
+startGameBtn.onclick = newGame;
 quitBtn.onclick = quitGame;
 newGameBtn.onclick = newGame;
+newWordBtn.onclick = newWordScreen;
 
 /* Modal  */
 
