@@ -1,4 +1,4 @@
-const palavras = ['ABACAXI', 'LARANJA', 'CAQUI', 'BARCO', 'INTERNET'];
+const palavras = ['ABACAXI', 'LARANJA', 'CAQUI', 'TANGERINA', 'BANANA', 'UVA', 'PERA', 'LIMAO'];
 let letras = [];
 let correctWordArr = [];
 let secretLetterArr = [];
