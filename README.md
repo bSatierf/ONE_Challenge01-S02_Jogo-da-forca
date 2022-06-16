@@ -1,4 +1,4 @@
-# Encriptador de Texto
+# Jogo da Forca/Hangman Game
 
 ## Challenge01 - Sprint02 :man_technologist: :coffee:
 
