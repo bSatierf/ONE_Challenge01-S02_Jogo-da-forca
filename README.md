@@ -8,7 +8,7 @@
 
 ##### Link para o Decodificador:
 
- https://bsatierf.github.io/ONE_Challenge1-S02_Jogo-da-forca/
+ https://bsatierf.github.io/ONE_Challenge01-S02_Jogo-da-forca/
 
 ___
 
